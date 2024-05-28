@@ -6,12 +6,13 @@ window.addEventListener("load", initApp); // When the page is loaded, run initAp
 async function initApp() {
   console.log("initApp: app.js is running 🎉"); // Log to the console that the app is running
   const posts = await getPosts();
- displayPosts(posts);
+ posts.sort((a,b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+  displayPosts(posts);
  displayPostsGrid(posts);
 }
 
 async function getPosts () {
-  const response = await fetch ("https://headless.cederdorff.dk/wp-json/wp/v2/posts?acf_format=standard");
+  const response = await fetch ("https://sandbox.aloyasmind.dk//wp-json/wp/v2/posts?acf_format=standard");
   const data = await response.json();
   return data;
 }
@@ -30,7 +31,6 @@ function displayPosts(posts) {
 function displayPostsGrid(posts){
   const postsGrid = document.querySelector("#posts-grid");
 
-  
   for (const post of posts) {
 
     postsGrid.insertAdjacentHTML(
